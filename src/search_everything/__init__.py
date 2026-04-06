@@ -1,0 +1,1 @@
+"""Search Everything Class-0 package."""
