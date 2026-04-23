@@ -1,4 +1,5 @@
 import time
+from pathlib import Path
 from .models import SearchRequest, SearchResponse, EverythingHealth
 from .config import Config
 from .es_client import ESClient
@@ -22,7 +23,7 @@ class SearchService:
         is_running = self.client.is_everything_running()
         return EverythingHealth(
             everything_running=is_running,
-            es_found=resolved_path is not None and resolved_path != self.config.es_path,
+            es_found=resolved_path is not None and Path(resolved_path).exists(),
             es_path=resolved_path
         )
 
