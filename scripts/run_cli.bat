@@ -1,5 +1,5 @@
 @echo off
 setlocal
-set PYTHONPATH=src
+call "%~dp0setenv.bat"
 python -m search_everything.cli %*
 endlocal

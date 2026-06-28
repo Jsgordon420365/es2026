@@ -14,9 +14,23 @@ def main():
     parser.add_argument("--files", action="store_true", help="Search files only")
     parser.add_argument("--regex", action="store_true", help="Enable regex search")
     parser.add_argument("--health", action="store_true", help="Perform a health check and exit")
+    parser.add_argument("--wizard", action="store_true", help="Run the interactive setup wizard")
+    parser.add_argument("--interactive", "-i", action="store_true", help="Launch interactive search REPL")
     parser.add_argument("--debug", action="store_true", help="Enable debug logging")
-    
+
     args = parser.parse_args()
+
+    if args.wizard or args.interactive:
+        from .wizard import SetupWizard, InteractiveSearch
+        config = load_config()
+        if args.debug:
+            config.log_level = "DEBUG"
+        setup_logging(level=config.log_level, log_file=config.log_file)
+        if args.interactive:
+            InteractiveSearch(config).run()
+        else:
+            SetupWizard().run()
+        return
     
     config = load_config()
     if args.debug:
