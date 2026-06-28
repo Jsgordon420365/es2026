@@ -300,7 +300,7 @@ class InteractiveSearch:
             self.regex = not self.regex
             print(f"  regex: {'on' if self.regex else 'off'}")
 
-        elif lower.startswith("limit"):
+        elif lower == "limit" or lower.startswith("limit "):
             parts = lower.split(maxsplit=1)
             if len(parts) == 2:
                 try:

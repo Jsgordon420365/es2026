@@ -49,9 +49,13 @@ def load_config() -> Config:
         return os.getenv(key) or file_vals.get(key, default)
 
     log_file_str = _get("EVERYTHING_LOG_FILE", "")
+    try:
+        default_limit = int(_get("EVERYTHING_DEFAULT_LIMIT", "100"))
+    except ValueError:
+        default_limit = 100
     return Config(
         es_path=_get("EVERYTHING_ES_PATH", "es.exe"),
-        default_limit=int(_get("EVERYTHING_DEFAULT_LIMIT", "100")),
+        default_limit=default_limit,
         log_file=Path(log_file_str) if log_file_str else None,
         log_level=_get("EVERYTHING_LOG_LEVEL", "INFO"),
     )
